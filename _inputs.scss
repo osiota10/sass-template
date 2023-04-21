@@ -1,0 +1,48 @@
+
+// Define common styles for all inputs
+input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    padding: 8px 12px;
+    transition: border-color 0.2s ease-in-out;
+  
+    &:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+  }
+  
+  // Define styles for text inputs
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+  
+    &::placeholder {
+      color: #999;
+    }
+  }
+  
+  // Define styles for select inputs
+  select {
+    width: 100%;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22%3E%3Cpath d=%22M2.75 7.5l4.5 5 4.5-5h-9zm0 5l4.5-5h6.25l4.5 5-4.5 5h-6.25l-4.5-5z%22/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    padding: 8px 32px 8px 12px;
+    text-align-last: center;
+  
+    &:focus {
+      outline: none;
+    }
+  }
+  
+  // Define styles for checkbox inputs
+  input[type="checkbox"] {
+    margin-right: 8px;
+  }
