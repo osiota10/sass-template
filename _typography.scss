@@ -1,0 +1,112 @@
+// Import font
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap');
+
+
+// Define your typography variables
+$primary-font: "Open Sans", sans-serif;
+$secondary-font: "Montserrat", sans-serif;
+$base-font-size: 16px;
+
+// Define your heading styles
+$h1-font-size: 3.3889rem;
+$h1-font-weight: bold;
+$h1-line-height: 1.2;
+
+$h2-font-size: 2.7222rem;
+$h2-font-weight: bold;
+$h2-line-height: 1.2;
+
+$h3-font-size: 2.1667rem;
+$h3-font-weight: bold;
+$h3-line-height: 1.2;
+
+$h4-font-size: 1.7222rem;
+$h4-font-weight: bold;
+$h4-line-height: 1.2;
+
+$h5-font-size: 1.3889rem;
+$h5-font-weight: bold;
+$h5-line-height: 1.2;
+
+$h6-font-size: 1.1111rem;
+$h6-font-weight: bold;
+$h6-line-height: 1.2;
+
+// Define your body text styles
+$regular-font-weight: 400;
+$bold-font-weight: 700;
+$italic-font-style: italic;
+$small-font-size: 0.77778rem;
+$medium-font-size: 1rem;
+$large-font-size: 1.2rem;
+
+// Define your global styles
+body {
+  font-family: $primary-font;
+  font-size: $base-font-size;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $secondary-font;
+  margin: 0;
+}
+
+h1 {
+  font-size: $h1-font-size;
+  font-weight: $h1-font-weight;
+  line-height: $h1-line-height;
+}
+
+h2 {
+  font-size: $h2-font-size;
+  font-weight: $h2-font-weight;
+  line-height: $h2-line-height;
+}
+
+h3 {
+  font-size: $h3-font-size;
+  font-weight: $h3-font-weight;
+  line-height: $h3-line-height;
+}
+
+h4 {
+  font-size: $h4-font-size;
+  font-weight: $h4-font-weight;
+  line-height: $h4-line-height;
+}
+
+h5 {
+    font-size: $h5-font-size;
+    font-weight: $h5-font-weight;
+    line-height: $h5-line-height;
+}
+
+h6 {
+    font-size: $h6-font-size;
+    font-weight: $h6-font-weight;
+    line-height: $h6-line-height;
+}
+
+p, li {
+  font-weight: $regular-font-weight;
+  font-size: $medium-font-size;
+  line-height: 1.5;
+}
+
+strong {
+  font-weight: $bold-font-weight;
+}
+
+em {
+  font-style: $italic-font-style;
+}
+
+small {
+  font-size: $small-font-size;
+  font-weight: $h6-font-weight;
+}
+
+.large-text {
+  font-size: $large-font-size;
+}
