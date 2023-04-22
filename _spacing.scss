@@ -1,0 +1,18 @@
+// Spacing utility
+@mixin generate($prefix, $property) {
+    // List of sizes to generate for each
+    $sizes: (0.22222, 0.44444, 0.88889, 1.3333, 1.7778, 2.2222, 2.6667, 3.1111, 3.5556, 4); //List Spacing style here
+    // Spacing to multiply the sizes by
+    $spacing: 1rem;
+    
+    // Loop through all of the sizes(we use @for rather than @each, as we want access to the index)
+    @for $i from 1 through length($sizes) {
+      // Get the size for the current index
+      $size: nth($sizes, $i);
+      
+      // Create the rule
+      .#{$prefix}-#{$i - 1} {
+        #{$property}: $spacing * $size;
+      }
+    }
+  }
