@@ -1,0 +1,60 @@
+
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$success-color: #28a745;
+$warning-color: #ffc107;
+$danger-color: #dc3545;
+
+// Define a function to generate color shades
+@function shade($color, $percentage) {
+  @return mix(white, $color, $percentage);
+}
+
+// Define a map of semantic color names and values
+$colors: (
+  "primary": $primary-color,
+  "secondary": $secondary-color,
+  "success": $success-color,
+  "warning": $warning-color,
+  "danger": $danger-color
+);
+
+// Define classes for each semantic color
+@each $color, $value in $colors {
+  .text-#{$color} {
+    color: $value;
+  }
+  
+  .bg-#{$color} {
+    background-color: $value;
+  }
+  
+  .border-#{$color} {
+    border-color: $value;
+  }
+  
+  // Define light and dark shades of each color
+  .text-#{$color}-light {
+    color: shade($value, 70%);
+  }
+  
+  .bg-#{$color}-light {
+    background-color: shade($value, 70%);
+  }
+  
+  .border-#{$color}-light {
+    border-color: shade($value, 70%);
+  }
+  
+  .text-#{$color}-dark {
+    color: shade($value, 30%);
+  }
+  
+  .bg-#{$color}-dark {
+    background-color: shade($value, 30%);
+  }
+  
+  .border-#{$color}-dark {
+    border-color: shade($value, 30%);
+  }
+}
