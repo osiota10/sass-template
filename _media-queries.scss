@@ -1,14 +1,14 @@
 $breakpoints: (
-  'xs': 0,
-  'sm': 576px,
-  'md': 768px,
-  'lg': 992px,
-  'xl': 1200px
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
 );
 
 @mixin media-breakpoint-up($breakpoint) {
   @if map-has-key($breakpoints, $breakpoint) {
-    @media (min-width: map-get($breakpoints, $breakpoint)) {
+    @media (min-width: #{map-get($breakpoints, $breakpoint)}) {
       @content;
     }
   } @else {
@@ -18,7 +18,7 @@ $breakpoints: (
 
 @mixin media-breakpoint-down($breakpoint) {
   @if map-has-key($breakpoints, $breakpoint) {
-    @media (max-width: map-get($breakpoints, $breakpoint) - 1px) {
+    @media (max-width: #{map-get($breakpoints, $breakpoint) - 1px}) {
       @content;
     }
   } @else {
@@ -31,7 +31,7 @@ $breakpoints: (
   $end-pixel: map-get($breakpoints, $end);
 
   @if $start-pixel and $end-pixel {
-    @media (min-width: $start-pixel) and (max-width: $end-pixel - 1px) {
+    @media (min-width: #{ $start-pixel }) and (max-width: #{ $end-pixel - 1px }) {
       @content;
     }
   } @else {
@@ -45,34 +45,16 @@ $breakpoints: (
   @each $bp, $val in $breakpoints {
     @if $bp == $breakpoint {
       @if $next-breakpoint {
-        @media (min-width: #{$val}) and (max-width: #{$next-breakpoint} - 1px) {
+        @media (min-width: #{ $val }) and (max-width: #{ $next-breakpoint - 1px }) {
           @content;
         }
       } @else {
-        @media (min-width: #{$val}) {
+        @media (min-width: #{ $val }) {
           @content;
         }
       }
     }
 
     $next-breakpoint: $val;
-  }
-}
-
-
-//Usage
-.my-class {
-  // Default styles...
-
-  @include media-breakpoint-up('sm') {
-    // Styles for small breakpoint and up...
-  }
-
-  @include media-breakpoint-between('md', 'lg') {
-    // Styles between medium and large breakpoints...
-  }
-
-  @include media-breakpoint-only('xl') {
-    // Styles only for extra-large breakpoint...
   }
 }
