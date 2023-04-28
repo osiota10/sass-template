@@ -23,7 +23,7 @@ For example, to include the partial for buttons, you would add the following lin
 
 ## Contributing
 
-We welcome contributions from anyone who would like to help make SASS-TEMPLATE better. If you have an idea for a new feature, or have found a bug that needs fixing, please open a new issue in the GitHub repository.
+Contributions are welcomed from anyone who would like to help make SASS-TEMPLATE better. If you have an idea for a new feature, or have found a bug that needs fixing, please open a new issue in the GitHub repository.
 
 If you'd like to contribute code to thi SASS-TEMPLATE, please fork the repository, create a new branch for your changes, and submit a pull request.   Your changes would be reviewed and merged into the main branch if they meet our guidelines.
 
