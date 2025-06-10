@@ -28,3 +28,33 @@ Contributions are welcomed from anyone who would like to help make SASS-TEMPLATE
 If you'd like to contribute code to thi SASS-TEMPLATE, please fork the repository, create a new branch for your changes, and submit a pull request.   Your changes would be reviewed and merged into the main branch if they meet our guidelines.
 
 
+## Compilation
+
+To compile the SCSS files into a single CSS file (`main.css`), you'll need a Sass compiler.
+
+### Using Node Sass (Dart Sass is recommended)
+
+It's recommended to use Dart Sass, which is the primary implementation of Sass.
+
+1.  **Install Dart Sass:**
+    If you have Node.js and npm installed, you can install Dart Sass globally:
+    ```bash
+    npm install -g sass
+    ```
+    Alternatively, check the official Sass website for other installation options: [https://sass-lang.com/install](https://sass-lang.com/install)
+
+2.  **Compile `main.scss`:**
+    Navigate to the root directory of this project in your terminal and run the following command:
+    ```bash
+    sass main.scss main.css
+    ```
+    This will compile `main.scss` and its imported partials into `main.css`.
+
+3.  **Watch for Changes (Optional):**
+    To automatically recompile your CSS when you make changes to your SCSS files, you can use the `--watch` flag:
+    ```bash
+    sass --watch main.scss:main.css
+    ```
+
+### Output
+The compiled CSS will be saved as `main.css` in the root directory. You can then link this file in your HTML, as demonstrated in `index.html`.

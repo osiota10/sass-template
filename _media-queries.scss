@@ -1,60 +1,98 @@
-$breakpoints: (
-  xs: 0,
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1200px
-);
+@use 'variables'; // Use the centralized breakpoints
 
 @mixin media-breakpoint-up($breakpoint) {
-  @if map-has-key($breakpoints, $breakpoint) {
-    @media (min-width: #{map-get($breakpoints, $breakpoint)}) {
+  @if map-has-key(variables.$breakpoints, $breakpoint) {
+    @media (min-width: #{map-get(variables.$breakpoints, $breakpoint)}) {
       @content;
     }
   } @else {
-    @error "Invalid breakpoint: #{$breakpoint}.";
+    @warn "Invalid breakpoint: #{$breakpoint}. Available: #{map-keys(variables.$breakpoints)}";
   }
 }
 
 @mixin media-breakpoint-down($breakpoint) {
-  @if map-has-key($breakpoints, $breakpoint) {
-    @media (max-width: #{map-get($breakpoints, $breakpoint) - 1px}) {
-      @content;
+  @if map-has-key(variables.$breakpoints, $breakpoint) {
+    $value: map-get(variables.$breakpoints, $breakpoint);
+    // If the breakpoint is 'xs' (or any other key that maps to 0),
+    // this mixin is not typically used as max-width: -1px is invalid.
+    // It's more common to use media-breakpoint-only(xs) or target screens up to next breakpoint.
+    @if $value > 0px { // Ensure value is greater than 0
+      @media (max-width: #{$value - 1px}) {
+        @content;
+      }
+    } @else {
+      // This case means the breakpoint value is 0 (e.g. 'xs').
+      // A max-width for 0px doesn't make sense.
+      // Often, `media-breakpoint-down(sm)` implies everything *below* sm (i.e., xs screens).
+      // If $breakpoint is 'xs', this warns. If you want to target 'xs' screens, use media-breakpoint-only(xs).
+      @warn "media-breakpoint-down() with breakpoint '#{$breakpoint}' (value #{inspect($value)}) is problematic. Consider using media-breakpoint-only('#{$breakpoint}') or ensure the breakpoint value is not 0.";
     }
   } @else {
-    @error "Invalid breakpoint: #{$breakpoint}.";
+    @warn "Invalid breakpoint: #{$breakpoint}. Available: #{map-keys(variables.$breakpoints)}";
   }
 }
 
-@mixin media-breakpoint-between($start, $end) {
-  $start-pixel: map-get($breakpoints, $start);
-  $end-pixel: map-get($breakpoints, $end);
-
-  @if $start-pixel and $end-pixel {
-    @media (min-width: #{ $start-pixel }) and (max-width: #{ $end-pixel - 1px }) {
-      @content;
+@mixin media-breakpoint-between($lower, $upper) {
+  @if map-has-key(variables.$breakpoints, $lower) and map-has-key(variables.$breakpoints, $upper) {
+    $lower-bound: map-get(variables.$breakpoints, $lower);
+    $upper-bound: map-get(variables.$breakpoints, $upper);
+    @if $upper-bound > $lower-bound {
+      @media (min-width: #{$lower-bound}) and (max-width: #{$upper-bound - 1px}) {
+        @content;
+      }
+    } @else {
+      @warn "Upper breakpoint '#{$upper}' (value #{inspect($upper-bound)}) must be larger than lower breakpoint '#{$lower}' (value #{inspect($lower-bound)}) for media-breakpoint-between().";
     }
   } @else {
-    @error "Invalid breakpoints: #{$start}, #{$end}.";
+    @if not map-has-key(variables.$breakpoints, $lower) {
+      @warn "Invalid lower breakpoint: #{$lower}. Available: #{map-keys(variables.$breakpoints)}";
+    }
+    @if not map-has-key(variables.$breakpoints, $upper) {
+      @warn "Invalid upper breakpoint: #{$upper}. Available: #{map-keys(variables.$breakpoints)}";
+    }
   }
 }
 
 @mixin media-breakpoint-only($breakpoint) {
-  $next-breakpoint: null;
+  @if map-has-key(variables.$breakpoints, $breakpoint) {
+    $min-width: map-get(variables.$breakpoints, $breakpoint);
+    $next-breakpoint-name: null;
+    $next-breakpoint-value: null;
 
-  @each $bp, $val in $breakpoints {
-    @if $bp == $breakpoint {
-      @if $next-breakpoint {
-        @media (min-width: #{ $val }) and (max-width: #{ $next-breakpoint - 1px }) {
-          @content;
+    // To find the next breakpoint, we need an ordered list of breakpoint names.
+    // Assuming standard order: xs, sm, md, lg, xl.
+    // This logic is more robust if $breakpoints map keys are guaranteed or explicitly ordered.
+    $breakpoint-names: ("xs", "sm", "md", "lg", "xl"); // Explicit order
+    $current-index: null;
+
+    // Find index of current breakpoint in our ordered list
+    @for $i from 1 through length($breakpoint-names) {
+        @if nth($breakpoint-names, $i) == $breakpoint {
+            $current-index: $i;
+            @break;
         }
-      } @else {
-        @media (min-width: #{ $val }) {
-          @content;
-        }
-      }
     }
 
-    $next-breakpoint: $val;
+    @if $current-index != null and $current-index < length($breakpoint-names) {
+        $next-breakpoint-name: nth($breakpoint-names, $current-index + 1);
+        @if map-has-key(variables.$breakpoints, $next-breakpoint-name) {
+            $next-breakpoint-value: map-get(variables.$breakpoints, $next-breakpoint-name);
+        } @else {
+            // This shouldn't happen if $breakpoint-names and variables.$breakpoints are aligned
+            @warn "Next breakpoint '#{$next-breakpoint-name}' not found in variables.$breakpoints.";
+        }
+    }
+
+    @if $next-breakpoint-value != null and $next-breakpoint-value > $min-width {
+      @media (min-width: #{$min-width}) and (max-width: #{$next-breakpoint-value - 1px}) {
+        @content;
+      }
+    } @else { // This is the largest breakpoint or next breakpoint value is not larger
+      @media (min-width: #{$min-width}) {
+        @content;
+      }
+    }
+  } @else {
+    @warn "Invalid breakpoint name for media-breakpoint-only(). Provided: '#{$breakpoint}'. Available: #{map-keys(variables.$breakpoints)}";
   }
 }

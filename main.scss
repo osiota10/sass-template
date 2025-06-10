@@ -1,0 +1,17 @@
+// Import variables first as other partials might depend on them
+// (We will create _variables.scss in the next step)
+@use 'variables';
+
+// Import all other partials
+@use 'typography';
+@use 'colors'; // Will be reviewed for conflict with light-and-dark-theme
+@use 'spacing';
+@use 'media-queries';
+@use 'buttons';
+@use 'inputs';
+@use 'light-and-dark-theme';
+
+// Add a simple body style to confirm compilation
+body {
+  font-family: variables.$primary-font; // Example usage of a variable
+}

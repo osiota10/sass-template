@@ -1,48 +1,76 @@
+@use 'variables';
+
+// Helper function to URL-encode colors for SVG data URIs
+// Ensure this function is defined before it's used, typically at the top.
+@function encodecolor($color) {
+  @if type-of($color) == color {
+    // Simplified encoding for hex colors: remove # and add %23
+    @return '%23' + str-slice(inspect($color), 2);
+  }
+  @warn "encodecolor() expects a color value. Received: #{$color}.";
+  @return $color; // Return original value or empty string if not a color
+}
 
 // Define common styles for all inputs
-input {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    padding: 8px 12px;
-    transition: border-color 0.2s ease-in-out;
+input,
+select,
+textarea { // Added textarea for completeness
+    border: 1px solid variables.$secondary-color; // Use variable for border color
+    border-radius: variables.$border-radius;    // Use variable for border radius
+    font-size: variables.$base-font-size;     // Use variable for font size
+    padding: variables.$spacing-sm variables.$spacing-md; // Use spacing variables for padding
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; // Added box-shadow to transition
+    line-height: variables.$base-line-height;
   
     &:focus {
-      border-color: #007bff;
+      border-color: variables.$primary-color; // Use variable for focus border color
       outline: none;
+      box-shadow: 0 0 0 3px rgba(variables.$primary-color, 0.25); // Adjusted shadow for better visibility
     }
-  }
+}
   
-  // Define styles for text inputs
-  input[type="text"],
-  input[type="email"],
-  input[type="password"] {
-    width: 100%;
+// Define styles for text inputs
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"], // Added common types
+input[type="tel"],
+input[type="url"],
+textarea {
+    width: 100%; // Make block-level inputs full width by default
   
     &::placeholder {
-      color: #999;
+      // Using a light gray that works on both light/dark backgrounds, or could be themed
+      color: #a9a9a9; // variables.$secondary-color or a lighter version of text color
+                     // This was `lighten(variables.$text-color-light, 40%)`
+                     // but $text-color-light might not be available directly here without theme context.
+                     // Using a general placeholder color. Theme-specific can override.
     }
-  }
+}
   
-  // Define styles for select inputs
-  select {
-    width: 100%;
+// Define styles for select inputs
+select {
     appearance: none;
-    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22%3E%3Cpath d=%22M2.75 7.5l4.5 5 4.5-5h-9zm0 5l4.5-5h6.25l4.5 5-4.5 5h-6.25l-4.5-5z%22/%3E%3C/svg%3E');
+    // SVG icon for dropdown arrow. Using a variable for the fill color.
+    // The encodecolor function will handle the # from the variable.
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"%3E%3Cpath fill="#{encodecolor(variables.$dark-color)}" d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/%3E%3C/svg%3E');
     background-repeat: no-repeat;
-    background-position: right 8px center;
-    border: none;
-    color: #333;
+    background-position: right variables.$spacing-md center;
+    padding-right: variables.$spacing-xl + variables.$spacing-sm; // Ensure enough space for arrow
     cursor: pointer;
-    padding: 8px 32px 8px 12px;
-    text-align-last: center;
   
     &:focus {
-      outline: none;
+      // Inherits common focus style
     }
-  }
+}
   
-  // Define styles for checkbox inputs
-  input[type="checkbox"] {
-    margin-right: 8px;
-  }
+// Define styles for checkbox and radio inputs
+input[type="checkbox"],
+input[type="radio"] {
+    margin-right: variables.$spacing-sm; // Spacing for label
+    accent-color: variables.$primary-color; // Modern way to theme checkboxes/radios
+    // For more detailed custom styling, additional rules would be needed.
+    // The ::before, ::after pseudo-elements on a styled span are common.
+    // The provided theme file already has some radio button styling.
+    // This `accent-color` is a good default.
+}

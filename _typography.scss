@@ -1,112 +1,57 @@
-// Import font
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap');
+@use 'variables';
 
-
-// Define your typography variables
-$primary-font: "Open Sans", sans-serif;
-$secondary-font: "Montserrat", sans-serif;
-$base-font-size: 16px;
-
-// Define your heading styles
-$h1-font-size: 3.3889rem;
-$h1-font-weight: bold;
-$h1-line-height: 1.2;
-
-$h2-font-size: 2.7222rem;
-$h2-font-weight: bold;
-$h2-line-height: 1.2;
-
-$h3-font-size: 2.1667rem;
-$h3-font-weight: bold;
-$h3-line-height: 1.2;
-
-$h4-font-size: 1.7222rem;
-$h4-font-weight: bold;
-$h4-line-height: 1.2;
-
-$h5-font-size: 1.3889rem;
-$h5-font-weight: bold;
-$h5-line-height: 1.2;
-
-$h6-font-size: 1.1111rem;
-$h6-font-weight: bold;
-$h6-line-height: 1.2;
-
-// Define your body text styles
-$regular-font-weight: 400;
-$bold-font-weight: 700;
-$italic-font-style: italic;
-$small-font-size: 0.77778rem;
-$medium-font-size: 1rem;
-$large-font-size: 1.2rem;
+// Import font (these remain as they are external imports)
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap'); // Example, might not be Open Sans/Montserrat
+@import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap'); // Example, ensure variables.$primary-font matches one of these if used directly
 
 // Define your global styles
 body {
-  font-family: $primary-font;
-  font-size: $base-font-size;
+  font-family: variables.$primary-font;
+  font-size: variables.$base-font-size;
+  line-height: variables.$base-line-height; // Added for consistency
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $secondary-font;
-  margin: 0;
+  font-family: variables.$secondary-font; // Headings use secondary font
+  margin-top: 0; // Common reset for headings
+  margin-bottom: variables.$spacing-sm; // Consistent bottom margin using spacing variable
+  font-weight: variables.$font-weight-bold; // Default bold for headings
+  line-height: 1.2; // Common line-height for headings
 }
 
-h1 {
-  font-size: $h1-font-size;
-  font-weight: $h1-font-weight;
-  line-height: $h1-line-height;
-}
-
-h2 {
-  font-size: $h2-font-size;
-  font-weight: $h2-font-weight;
-  line-height: $h2-line-height;
-}
-
-h3 {
-  font-size: $h3-font-size;
-  font-weight: $h3-font-weight;
-  line-height: $h3-line-height;
-}
-
-h4 {
-  font-size: $h4-font-size;
-  font-weight: $h4-font-weight;
-  line-height: $h4-line-height;
-}
-
-h5 {
-    font-size: $h5-font-size;
-    font-weight: $h5-font-weight;
-    line-height: $h5-line-height;
-}
-
-h6 {
-    font-size: $h6-font-size;
-    font-weight: $h6-font-weight;
-    line-height: $h6-line-height;
-}
+h1 { font-size: variables.$h1-font-size; }
+h2 { font-size: variables.$h2-font-size; }
+h3 { font-size: variables.$h3-font-size; }
+h4 { font-size: variables.$h4-font-size; }
+h5 { font-size: variables.$h5-font-size; }
+h6 { font-size: variables.$h6-font-size; }
 
 p, li {
-  font-weight: $regular-font-weight;
-  font-size: $medium-font-size;
-  line-height: 1.5;
+  font-weight: variables.$font-weight-normal;
+  font-size: variables.$base-font-size; // p and li use base font size
+  line-height: variables.$base-line-height;
+  margin-top: 0;
+  margin-bottom: variables.$spacing-md; // Consistent bottom margin for paragraphs
 }
 
-strong {
-  font-weight: $bold-font-weight;
+strong, b { // Added 'b' for completeness
+  font-weight: variables.$font-weight-bold;
 }
 
-em {
-  font-style: $italic-font-style;
+em, i { // Added 'i' for completeness
+  font-style: italic;
 }
 
 small {
-  font-size: $small-font-size;
-  font-weight: $h6-font-weight;
+  font-size: 0.875em; // Relative to parent font-size, common practice for small
 }
 
-.large-text {
-  font-size: $large-font-size;
+.large-text { // This class was present, let's define it with a variable or a multiplier
+  font-size: variables.$base-font-size * 1.25; // Example: 25% larger than base
 }
+
+// Consider if specific font styles for Lobster or Mulish are needed,
+// or if $primary-font and $secondary-font should be changed in _variables.scss
+// to 'Lobster' or 'Mulish' if they are the intended primary/secondary fonts.
+// For now, "Open Sans" and "Montserrat" are defined in _variables.scss.
+// The @import url for Lobster and Mulish are kept if they are used elsewhere or as alternatives.

@@ -1,61 +1,63 @@
-// Do not use this partial if you are using the _light-and-dark-theme.scss partial
+@use 'variables';
 
-$primary-color: #007bff;
-$secondary-color: #6c757d;
-$success-color: #28a745;
-$warning-color: #ffc107;
-$danger-color: #dc3545;
-
-// Define a function to generate color shades
+// Define a function to generate color shades (remains useful)
 @function shade($color, $percentage) {
   @return mix(white, $color, $percentage);
 }
 
-// Define a map of semantic color names and values
+// Define a map of semantic color names and values using centralized variables
 $colors: (
-  "primary": $primary-color,
-  "secondary": $secondary-color,
-  "success": $success-color,
-  "warning": $warning-color,
-  "danger": $danger-color
+  "primary": variables.$primary-color,
+  "secondary": variables.$secondary-color,
+  "success": variables.$success-color,
+  "warning": variables.$warning-color,
+  "danger": variables.$danger-color,
+  "light": variables.$light-color,
+  "dark": variables.$dark-color,
+  "white": variables.$white-color
+  // Note: $black-color could be added if needed for utilities like .text-black
 );
 
 // Define classes for each semantic color
-@each $color, $value in $colors {
-  .text-#{$color} {
-    color: $value;
+@each $color-name, $color-value in $colors {
+  .text-#{$color-name} {
+    color: $color-value;
   }
   
-  .bg-#{$color} {
-    background-color: $value;
+  .bg-#{$color-name} {
+    background-color: $color-value;
   }
   
-  .border-#{$color} {
-    border-color: $value;
+  .border-#{$color-name} {
+    border-color: $color-value;
   }
   
   // Define light and dark shades of each color
-  .text-#{$color}-light {
-    color: shade($value, 70%);
-  }
-  
-  .bg-#{$color}-light {
-    background-color: shade($value, 70%);
-  }
-  
-  .border-#{$color}-light {
-    border-color: shade($value, 70%);
-  }
-  
-  .text-#{$color}-dark {
-    color: shade($value, 30%);
-  }
-  
-  .bg-#{$color}-dark {
-    background-color: shade($value, 30%);
-  }
-  
-  .border-#{$color}-dark {
-    border-color: shade($value, 30%);
+  // Only generate shades for colors that are not white or very light already
+  @if $color-name != "white" and $color-name != "light" {
+    .text-#{$color-name}-light {
+      color: shade($color-value, 70%);
+    }
+
+    .bg-#{$color-name}-light {
+      background-color: shade($color-value, 70%);
+    }
+
+    .border-#{$color-name}-light {
+      border-color: shade($color-value, 70%);
+    }
+
+    .text-#{$color-name}-dark {
+      // Using mix with black for dark shades for more control
+      color: mix(black, $color-value, 30%);
+    }
+
+    .bg-#{$color-name}-dark {
+      background-color: mix(black, $color-value, 30%);
+    }
+
+    .border-#{$color-name}-dark {
+      border-color: mix(black, $color-value, 30%);
+    }
   }
 }

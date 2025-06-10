@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCSS Template Demo</title>
+    <link rel="stylesheet" href="main.css"> <!-- Link to the compiled CSS -->
+</head>
+<body class="light-theme"> <!-- Default to light theme -->
+
+    <div class="container" style="padding: 2rem; margin-bottom: 2rem;">
+        <h1>SCSS Template Demonstration</h1>
+        <p>This page demonstrates the styles defined in the SCSS template.
+           Use the toggle below to switch between light and dark themes.</p>
+
+        <button class="theme-toggle" id="themeToggle">Toggle Theme</button>
+    </div>
+
+    <div class="container" style="padding: 2rem; margin-bottom: 1rem;">
+        <h2>Typography</h2>
+        <h1>Heading 1</h1>
+        <h2>Heading 2</h2>
+        <h3>Heading 3</h3>
+        <h4>Heading 4</h4>
+        <h5>Heading 5</h5>
+        <h6>Heading 6</h6>
+        <p>This is a paragraph of regular text. It uses the <strong>primary font</strong> and includes <strong>bold text</strong> and <em>italic text</em>.</p>
+        <p><small>This is small text.</small></p>
+        <p class="large-text">This is large text.</p>
+        <p class="text-primary">This text uses the primary color.</p>
+        <p class="text-success bg-light">This text has a success color on a light background (utility classes).</p>
+    </div>
+
+    <div class="container" style="padding: 2rem; margin-bottom: 1rem;">
+        <h2>Buttons</h2>
+        <p><button class="button primary">Primary Button</button></p>
+        <p><button class="button secondary">Secondary Button</button></p>
+        <p><button class="button success">Success Button</button></p>
+        <p><button class="button warning">Warning Button</button></p>
+        <p><button class="button danger">Danger Button</button></p>
+    </div>
+
+    <div class="container" style="padding: 2rem; margin-bottom: 1rem;">
+        <h2>Inputs</h2>
+        <form>
+            <div style="margin-bottom: 1rem;">
+                <label for="textInput">Text Input:</label><br>
+                <input type="text" id="textInput" placeholder="Enter text here">
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <label for="emailInput">Email Input:</label><br>
+                <input type="email" id="emailInput" placeholder="Enter email here">
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <label for="passwordInput">Password Input:</label><br>
+                <input type="password" id="passwordInput" placeholder="Enter password">
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <label for="selectDropdown">Select Dropdown:</label><br>
+                <select id="selectDropdown">
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                    <option value="3">Option 3</option>
+                </select>
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <label>Checkbox:</label><br>
+                <input type="checkbox" id="checkbox1"> <label for="checkbox1">Option A</label>
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <label>Radio Buttons:</label><br>
+                <input type="radio" id="radio1" name="radioGroup" value="r1"> <label for="radio1">Choice 1</label><br>
+                <input type="radio" id="radio2" name="radioGroup" value="r2"> <label for="radio2">Choice 2</label>
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <label for="colorPicker">Color Picker:</label><br>
+                <input type="color" id="colorPicker" value="#007bff">
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <label for="rangeSlider">Range Slider:</label><br>
+                <input type="range" id="rangeSlider" min="0" max="100" value="50">
+            </div>
+        </form>
+    </div>
+
+    <div class="container" style="padding: 2rem;">
+        <h2>Spacing Utilities (Examples)</h2>
+        <div class="bg-primary-light text-primary-dark p-1 mb-1">Padding 1, Margin-bottom 1</div>
+        <div class="bg-secondary-light text-secondary-dark p-2 mb-2">Padding 2, Margin-bottom 2</div>
+        <div class="bg-success-light text-success-dark p-3 mb-3">Padding 3, Margin-bottom 3</div>
+        <div class="bg-warning-light text-warning-dark p-4 mt-4">Padding 4, Margin-top 4</div>
+    </div>
+
+    <script>
+        // Basic theme toggling script
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            if (body.classList.contains('light-theme')) {
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+                themeToggle.classList.add('active'); // For toggle's own styling if needed
+            } else {
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+                themeToggle.classList.remove('active');
+            }
+        });
+
+        // Set initial toggle state based on body class (optional)
+        if (body.classList.contains('dark-theme')) {
+            themeToggle.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>

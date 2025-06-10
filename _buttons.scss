@@ -1,12 +1,12 @@
-// @use 'colors';
+@use 'variables';
 
 .button {
   display: inline-block;
   padding: 10px 20px;
-  border-radius: 16px;
+  border-radius: variables.$border-radius-lg; // Using variable for border-radius
   text-decoration: none;
-  font-size: 20px;
-  font-weight: bold;
+  font-size: variables.$base-font-size; // Using variable for font-size
+  font-weight: variables.$font-weight-bold; // Using variable for font-weight
   text-align: center;
   height: 56px;
   width: 100%;
@@ -15,7 +15,7 @@
 
   &.primary {
     background-color: variables.$primary-color;
-    color: white;
+    color: variables.$white-color;
 
     &:hover {
       background-color: lighten(variables.$primary-color, 10%);
@@ -24,7 +24,7 @@
 
   &.secondary {
     background-color: variables.$secondary-color;
-    color: white;
+    color: variables.$white-color;
 
     &:hover {
       background-color: lighten(variables.$secondary-color, 10%);
@@ -33,7 +33,7 @@
 
   &.success {
     background-color: variables.$success-color;
-    color: white;
+    color: variables.$white-color;
 
     &:hover {
       background-color: lighten(variables.$success-color, 10%);
@@ -42,7 +42,8 @@
 
   &.warning {
     background-color: variables.$warning-color;
-    color: white;
+    // Assuming text on warning buttons should be dark for better contrast with yellow
+    color: variables.$dark-color;
 
     &:hover {
       background-color: lighten(variables.$warning-color, 10%);
@@ -51,7 +52,7 @@
 
   &.danger {
     background-color: variables.$danger-color;
-    color: white;
+    color: variables.$white-color;
 
     &:hover {
       background-color: lighten(variables.$danger-color, 10%);

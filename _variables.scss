@@ -1,0 +1,75 @@
+// Global Color Palette (Primary source of truth for colors)
+$primary-color: #007bff; // Blue
+$secondary-color: #6c757d; // Gray
+$success-color: #28a745; // Green
+$warning-color: #ffc107; // Yellow
+$danger-color: #dc3545; // Red
+$light-color: #f8f9fa; // Light gray
+$dark-color: #343a40; // Dark gray
+$white-color: #ffffff;
+$black-color: #000000;
+
+// Theme-specific color variables (can be overridden in _light-and-dark-theme.scss if needed)
+// For Light Theme (defaults, can be aliased or used directly)
+$background-color-light: $light-color;
+$text-color-light: $dark-color;
+$primary-theme-color-light: #06567F; // Specific primary for light theme
+$secondary-theme-color-light: $white-color;
+$button-text-color-light: $white-color;
+$container-background-light: $white-color;
+
+// For Dark Theme (defaults, can be aliased or used directly)
+$background-color-dark: #333F44; // Darker background
+$text-color-dark: $light-color;
+$primary-theme-color-dark: #8CD2F2; // Specific primary for dark theme
+$secondary-theme-color-dark: #1A1A1B; // Often a very dark gray or near black
+$button-text-color-dark: #1A1A1B; // Text color for buttons in dark theme
+$container-background-dark: #1A1A1B;
+
+
+// Typography Variables (from _typography.scss for centralization)
+$primary-font: "Open Sans", sans-serif;
+$secondary-font: "Montserrat", sans-serif; // Used for headings
+$base-font-size: 16px;
+$base-line-height: 1.5;
+
+// Heading font sizes (from _typography.scss)
+$h1-font-size: 3.3889rem;
+$h2-font-size: 2.7222rem;
+$h3-font-size: 2.1667rem;
+$h4-font-size: 1.7222rem;
+$h5-font-size: 1.3889rem;
+$h6-font-size: 1.1111rem;
+
+// Font weights (from _typography.scss)
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+
+// Spacing Variables (can be used by _spacing.scss or other components)
+$spacing-unit: 1rem;
+$spacing-xs: $spacing-unit * 0.25;  // 4px if 1rem = 16px
+$spacing-sm: $spacing-unit * 0.5;   // 8px
+$spacing-md: $spacing-unit;         // 16px
+$spacing-lg: $spacing-unit * 1.5;   // 24px
+$spacing-xl: $spacing-unit * 2;     // 32px
+$spacing-xxl: $spacing-unit * 3;    // 48px
+
+// Breakpoints (from _media-queries.scss for centralization)
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+);
+
+// Border radius
+$border-radius-sm: 0.2rem;
+$border-radius: 0.25rem;
+$border-radius-lg: 0.3rem;
+
+// Transitions
+$transition-base: all .2s ease-in-out;
+
+// Export all variables so they are available with @use 'variables';
+// No specific export logic needed for variables, they become available under the 'variables' namespace.

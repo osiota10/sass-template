@@ -1,18 +1,80 @@
-// Spacing utility
+@use 'variables'; // To use $spacing-unit if needed
+
+// Spacing utility mixin
 @mixin generate($prefix, $property) {
-    // List of sizes to generate for each
-    $sizes: (0.22222, 0.44444, 0.88889, 1.3333, 1.7778, 2.2222, 2.6667, 3.1111, 3.5556, 4); //List Spacing style here
-    // Spacing to multiply the sizes by
-    $spacing: 1rem;
+    // Corresponds to $spacing-xs, sm, md, lg, xl, xxl if $spacing-unit is 1rem.
+    // Generates classes from index 0 to 5: prefix-0, prefix-1, ..., prefix-5
+    $sizes: (0.25, 0.5, 1, 1.5, 2, 3);
+    $base-spacing-unit: variables.$spacing-unit;
     
-    // Loop through all of the sizes(we use @for rather than @each, as we want access to the index)
-    @for $i from 1 through length($sizes) {
-      // Get the size for the current index
-      $size: nth($sizes, $i);
-      
-      // Create the rule
-      .#{$prefix}-#{$i - 1} {
-        #{$property}: $spacing * $size;
+    @for $i from 0 through length($sizes) - 1 {
+      $size-value: nth($sizes, $i + 1);
+      .#{$prefix}-#{$i} {
+        #{$property}: $base-spacing-unit * $size-value !important;
       }
     }
+    // Add auto classes for margin
+    @if $property == margin {
+        .#{$prefix}-auto {
+            #{$property}: auto !important;
+        }
+    }
+}
+
+// Generate Margin classes (e.g., m-0, mt-1, mx-auto)
+$margin-properties: (
+  "m": "margin",
+  "mt": "margin-top",
+  "mr": "margin-right",
+  "mb": "margin-bottom",
+  "ml": "margin-left"
+);
+@each $prefix, $property in $margin-properties {
+  @include generate($prefix, $property);
+}
+
+// For margin x and y axes (mx, my)
+// Using the same $sizes array as in the mixin for consistency in class generation (mx-0 to mx-5)
+$axis-sizes: (0.25, 0.5, 1, 1.5, 2, 3);
+$base-spacing-unit: variables.$spacing-unit;
+
+@for $i from 0 through length($axis-sizes) - 1 {
+  $size-value: nth($axis-sizes, $i + 1);
+  .mx-#{$i} {
+    margin-left: $base-spacing-unit * $size-value !important;
+    margin-right: $base-spacing-unit * $size-value !important;
   }
+  .my-#{$i} {
+    margin-top: $base-spacing-unit * $size-value !important;
+    margin-bottom: $base-spacing-unit * $size-value !important;
+  }
+}
+.mx-auto { margin-left: auto !important; margin-right: auto !important; }
+.my-auto { margin-top: auto !important; margin-bottom: auto !important; }
+
+
+// Generate Padding classes (e.g., p-0, pt-1)
+$padding-properties: (
+  "p": "padding",
+  "pt": "padding-top",
+  "pr": "padding-right",
+  "pb": "padding-bottom",
+  "pl": "padding-left"
+);
+@each $prefix, $property in $padding-properties {
+  @include generate($prefix, $property);
+}
+
+// For padding x and y axes (px, py)
+// Using the same $axis-sizes for consistency (px-0 to px-5)
+@for $i from 0 through length($axis-sizes) - 1 {
+  $size-value: nth($axis-sizes, $i + 1);
+  .px-#{$i} {
+    padding-left: $base-spacing-unit * $size-value !important;
+    padding-right: $base-spacing-unit * $size-value !important;
+  }
+  .py-#{$i} {
+    padding-top: $base-spacing-unit * $size-value !important;
+    padding-bottom: $base-spacing-unit * $size-value !important;
+  }
+}

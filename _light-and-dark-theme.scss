@@ -1,150 +1,149 @@
-//Note: Do not use the color partial when using this partial
-
-// Define color variables for the light theme
-$primary-color-light: #06567F;
-$secondary-color-light: #FFFFFF;
-$background-color-light: #F6F6F6;
-$text-color-light: #1A1A1B;
-$button-color-light: #fff;
-$bg-container-light: #fff;
-
-// Define color variables for the dark theme
-$primary-color-dark: #8CD2F2;
-$secondary-color-dark: #1A1A1B;
-$background-color-dark: #333F44;
-$text-color-dark: #FFFFFF;
-$button-color-dark: #1A1A1B;
-$bg-container-dark: #1A1A1B;
+@use 'variables';
 
 // Define mixin for the common styles of both themes
-@mixin theme-common($background-color,$text-color,$button-color,$primary-color,$bg-container) {
+@mixin theme-common($background-color, $text-color, $button-text-color, $theme-primary-color, $container-bg-color) {
     background-color: $background-color;
     color: $text-color;
 
   .button {
-    color: $button-color;
+    // General button text color is applied via $button-text-color passed to the mixin
+    // For primary buttons, the text color is specifically $button-text-color
+    // For secondary, it's $theme-primary-color initially.
 
     &.primary {
-        background-color: $primary-color;
-    
+        background-color: $theme-primary-color;
+        color: $button-text-color;
+
         &:hover {
-          background-color: lighten($primary-color, 10%);
+          background-color: lighten($theme-primary-color, 10%);
         }
       }
     
       &.secondary {
-        background-color: #fff;
-        color: $primary-color;
-        border: 2px solid $primary-color;
+        background-color: $container-bg-color;
+        color: $theme-primary-color;
+        border: 2px solid $theme-primary-color;
     
         &:hover {
-          background-color: $primary-color;
-          color: #fff;
+          background-color: $theme-primary-color;
+          color: $container-bg-color;
         }
       }
   }
 
   .container{
-    background-color: $bg-container;
+    background-color: $container-bg-color;
   }
 
   input[type="text"] {
     background-color: $background-color;
-    border: 1px solid $primary-color;
+    border: 1px solid $theme-primary-color;
     color: $text-color;
 
-    // Add hover and focus states for the input
+    &::placeholder {
+        color: lighten($text-color, 25%);
+    }
+
     &:hover, &:focus {
-        border-color: darken($primary-color, 10%);
+        border-color: darken($theme-primary-color, 10%);
     }
   }
 
-    input[type='radio'] {
-        border: 2px solid $primary-color;
-        background-color: $bg-container;
+  input[type='radio'] {
+      border: 2px solid $theme-primary-color;
+      background-color: $container-bg-color;
 
-        &:checked{
-            background-color: $primary-color;
-        }
-
-        &:focus{
-            outline: none;
-            border: 2px solid $primary-color;
-            background-color: $primary-color;
-        }
-    }
-
-
-input[type='color']{
-    border: 5px solid $primary-color;
-    height: 120px;
-}
-
-input[type='range']{
-    &:active::-webkit-slider-thumb{
-        background: lighten($primary-color, 10%);
-    }
-
-    &::-moz-range-thumb:hover{
-        background: lighten($primary-color, 10%);
-    }
-
-    &:active::-moz-range-thumb{
-        background: lighten($primary-color, 10%);
-    }
-
-    &:focus::-webkit-slider-thumb{
-        box-shadow: 0 0 0 3px $bg-container, 0 0 0 5px lighten($primary-color, 10%);
-    }
-
-    &::-webkit-slider-thumb:hover{
-        background: lighten($primary-color, 10%);
-    }
-}
-
-input[type='range']::-webkit-slider-thumb{
-    background-color: $primary-color;
-    -webkit-appearance: none;
-}
-
-
-.theme-toggle{
-    background-color: #fff;
-    border: 2px solid $primary-color;
-
-    &::before{
-        background-color: $primary-color;
-    }
-
-    &.active {
-        background-color: #333;
-    
-        &::before {
-          transform: translateX(1.5rem);
-          background-color: #fff;
-        }
+      &:checked{
+          background-color: $theme-primary-color;
       }
-}
+
+      &:focus{
+          outline: none;
+          border: 2px solid darken($theme-primary-color, 10%);
+      }
+  }
+
+  input[type='color']{
+      border: 5px solid $theme-primary-color;
+      height: 120px;
+  }
+
+  input[type='range']{
+      &::-webkit-slider-thumb {
+          background-color: $theme-primary-color;
+          -webkit-appearance: none;
+      }
+      &::-moz-range-thumb {
+          background-color: $theme-primary-color;
+      }
+
+      &:active::-webkit-slider-thumb, &::-webkit-slider-thumb:hover {
+          background: lighten($theme-primary-color, 10%);
+      }
+      &:active::-moz-range-thumb, &::-moz-range-thumb:hover {
+          background: lighten($theme-primary-color, 10%);
+      }
+
+      &:focus::-webkit-slider-thumb{
+          box-shadow: 0 0 0 3px $container-bg-color, 0 0 0 5px lighten($theme-primary-color, 10%);
+      }
+  }
+
+  .theme-toggle{
+      background-color: $container-bg-color;
+      border: 2px solid $theme-primary-color;
+
+      &::before{
+          background-color: $theme-primary-color;
+      }
+
+      &.active {
+          // This implies that when the toggle is 'active' (e.g. dark mode is on),
+          // the toggle itself might adopt the dark theme's primary color for its background
+          // and its moving part might adopt the dark theme's container background.
+          // This uses global variables directly as it's a specific state override.
+          background-color: variables.$primary-theme-color-dark;
+
+          &::before {
+            transform: translateX(1.5rem);
+            background-color: variables.$container-background-dark;
+          }
+      }
+  }
 }
 
 // Define styles for the light theme
 .light-theme {
-  $background-color: $background-color-light;
-  $text-color: $text-color-light;
-  $primary-color: $primary-color-light;
-  $button-color: $button-color-light;
-  $bg-container:$bg-container-light;
+  // These local variables are passed to the mixin
+  $bg-color: variables.$background-color-light;
+  $txt-color: variables.$text-color-light;
+  $btn-txt-color: variables.$button-text-color-light;
+  $primary-theme-color: variables.$primary-theme-color-light;
+  $container-bg: variables.$container-background-light;
 
-  @include theme-common($background-color,$text-color,$button-color,$primary-color,$bg-container);
+  @include theme-common(
+    $bg-color,
+    $txt-color,
+    $btn-txt-color,
+    $primary-theme-color,
+    $container-bg
+  );
 }
 
 // Define styles for the dark theme
 .dark-theme {
-    $background-color: $background-color-dark;
-    $text-color: $text-color-dark;
-    $primary-color: $primary-color-dark;
-    $button-color: $button-color-dark;
-    $bg-container: $bg-container-dark;
+  // These local variables are passed to the mixin
+  $bg-color: variables.$background-color-dark;
+  $txt-color: variables.$text-color-dark;
+  $btn-txt-color: variables.$button-text-color-dark;
+  $primary-theme-color: variables.$primary-theme-color-dark;
+  $container-bg: variables.$container-background-dark;
 
-  @include theme-common($background-color,$text-color,$button-color,$primary-color,$bg-container);
+  @include theme-common(
+    $bg-color,
+    $txt-color,
+    $btn-txt-color,
+    $primary-theme-color,
+    $container-bg
+  );
 }
