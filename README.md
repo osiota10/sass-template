@@ -1,7 +1,7 @@
 # SASS Template
 
 This is a SASS template designed to help developers streamline their CSS workflows. It includes a variety of useful tools, mixins, and functions to help you quickly create consistent and responsive designs.
-..
+.
 ## Features
 
 - Modular structure for easy customization and maintenance
